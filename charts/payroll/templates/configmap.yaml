@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "payroll.fullname" . }}-content
+  labels:
+    {{- include "payroll.labels" . | nindent 4 }}
+data:
+  index.html: |
+    <!doctype html>
+    <html lang="en">
+      <head><meta charset="utf-8"><title>Payroll GitOps Lab</title></head>
+      <body><h1>Payroll is healthy</h1><p>Secrets are injected but never displayed.</p></body>
+    </html>

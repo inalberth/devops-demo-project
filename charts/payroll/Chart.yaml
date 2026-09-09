@@ -1,0 +1,6 @@
+apiVersion: v2
+name: payroll
+description: Minimal workload used to validate the local GitOps delivery path
+type: application
+version: 0.1.0
+appVersion: "1.29.1"

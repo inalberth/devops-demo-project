@@ -1,0 +1,12 @@
+# OpenBao administrative material and persistent data
+.env
+*.unseal
+*.root-token
+openbao/data/
+
+# Generated GitOps bootstrap manifest
+.generated/
+
+# Local tooling
+.DS_Store
+*.tmp

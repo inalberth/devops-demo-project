@@ -1,0 +1,7 @@
+repoUrl: ""
+targetRevision: main
+
+syncPolicy:
+  automated: true
+  prune: true
+  selfHeal: true

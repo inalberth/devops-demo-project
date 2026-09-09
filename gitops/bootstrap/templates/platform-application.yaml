@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: payroll-platform
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  project: devops-lab
+  source:
+    repoURL: {{ required "repoUrl is required" .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+    path: infra/external-secrets/payroll
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: payroll-dev
+  syncPolicy:
+    {{- if .Values.syncPolicy.automated }}
+    automated:
+      prune: {{ .Values.syncPolicy.prune }}
+      selfHeal: {{ .Values.syncPolicy.selfHeal }}
+    {{- end }}
+    syncOptions:
+      - CreateNamespace=true

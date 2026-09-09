@@ -1,0 +1,16 @@
+services:
+  openbao:
+    image: quay.io/openbao/openbao:2.6.2
+    container_name: openbao
+    command: ["server", "-config=/openbao/config/openbao.hcl"]
+    ports:
+      - 8200:8200
+      - 8201:8201
+    volumes:
+      - ./config:/openbao/config:ro
+      - ./data:/openbao/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - BAO_ADDR=http://0.0.0.0:8200
+    restart: unless-stopped
