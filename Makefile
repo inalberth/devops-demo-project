@@ -65,6 +65,10 @@ k8s-stop:
 
 k8s-delete:
 	@echo "Deleting K3D cluster only; OpenBao Raft data is preserved."
+	@if docker inspect $(OPENBAO_CONTAINER) --format '{{json .NetworkSettings.Networks}}' 2>/dev/null \
+		| jq -e 'has("k3d-$(CLUSTER_NAME)")' >/dev/null; then \
+		docker network disconnect k3d-$(CLUSTER_NAME) $(OPENBAO_CONTAINER); \
+	fi
 	k3d cluster delete $(CLUSTER_NAME)
 
 k8s-status:
