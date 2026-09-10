@@ -9,6 +9,7 @@ ESO_NAMESPACE ?= external-secrets
 ESO_CHART_VERSION ?= 2.10.0
 OPENBAO_DIR ?= openbao
 OPENBAO_CONTAINER ?= openbao
+APP_IMAGE ?= demo-java-app:1.0.0-local
 
 .PHONY: help
 help:
@@ -19,7 +20,8 @@ help:
 	@echo "  make status              Show component health"
 	@echo "  make validate            Run static validation"
 	@echo "  make secrets-apply       Configure OpenBao and External Secrets"
-	@echo "  make payroll-install     Install payroll directly for pre-GitOps testing"
+	@echo "  make app-build           Build and import the Java application image"
+	@echo "  make app-install         Install demo-java-app directly for pre-GitOps testing"
 	@echo "  make gitops-bootstrap    Submit root Application (requires GIT_REPO_URL)"
 	@echo "  make preflight-test      Validate platform/workload before GitOps"
 	@echo "  make smoke-test          Validate the complete GitOps delivery path"
@@ -109,20 +111,24 @@ external-secrets-status:
 	@kubectl get pods -n $(ESO_NAMESPACE)
 	@kubectl get crd secretstores.external-secrets.io externalsecrets.external-secrets.io
 
-.PHONY: secrets-apply secrets-status payroll-install gitops-bootstrap validate preflight-test smoke-test
+.PHONY: secrets-apply secrets-status app-build app-install gitops-bootstrap validate preflight-test smoke-test
 secrets-apply: openbao-unseal openbao-bootstrap
 	bash scripts/check-openbao-connectivity.sh
-	kubectl apply -k infra/external-secrets/payroll
-	kubectl wait -n payroll-dev --for=condition=Ready secretstore/openbao --timeout=120s
-	kubectl wait -n payroll-dev --for=condition=Ready externalsecret/payroll-database --timeout=120s
+	kubectl apply -k infra/external-secrets/demo-java-app
+	kubectl wait -n demo-dev --for=condition=Ready secretstore/openbao --timeout=120s
+	kubectl wait -n demo-dev --for=condition=Ready externalsecret/demo-java-app-database --timeout=120s
 
 secrets-status:
-	@kubectl get secretstore,externalsecret -n payroll-dev
-	@kubectl get secret payroll-database -n payroll-dev
+	@kubectl get secretstore,externalsecret -n demo-dev
+	@kubectl get secret demo-java-app-database -n demo-dev
 
-payroll-install:
-	helm upgrade --install payroll charts/payroll \
-		--namespace payroll-dev --create-namespace -f charts/payroll/values-dev.yaml --wait --timeout 5m
+app-build:
+	docker build -t $(APP_IMAGE) demo-java-app
+	k3d image import -c $(CLUSTER_NAME) $(APP_IMAGE)
+
+app-install:
+	helm upgrade --install demo-java-app helm/app \
+		--namespace demo-dev --create-namespace -f helm/app/values-dev.yaml --wait --timeout 5m
 
 gitops-bootstrap:
 	bash scripts/gitops-bootstrap.sh

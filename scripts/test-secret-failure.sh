@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-name=payroll-invalid-source
-namespace=payroll-dev
+name=demo-java-app-invalid-source
+namespace=demo-dev
 cleanup() {
   kubectl delete externalsecret "${name}" -n "${namespace}" --ignore-not-found --wait=false >/dev/null
 }
@@ -12,19 +12,19 @@ kubectl apply -f - >/dev/null <<'YAML'
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
-  name: payroll-invalid-source
-  namespace: payroll-dev
+  name: demo-java-app-invalid-source
+  namespace: demo-dev
 spec:
   refreshInterval: 1h
   secretStoreRef:
     kind: SecretStore
     name: openbao
   target:
-    name: payroll-invalid-source
+    name: demo-java-app-invalid-source
   data:
     - secretKey: VALUE
       remoteRef:
-        key: payroll/dev/does-not-exist
+        key: demo-java-app/dev/does-not-exist
         property: value
 YAML
 

@@ -10,7 +10,7 @@ spec:
   sourceRepos:
     - {{ required "repoUrl is required" .Values.repoUrl | quote }}
   destinations:
-    - namespace: payroll-dev
+    - namespace: demo-dev
       server: https://kubernetes.default.svc
   clusterResourceWhitelist:
     - group: ""

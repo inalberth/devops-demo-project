@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: payroll-dev
+  name: demo-java-app-dev
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "0"
@@ -10,14 +10,14 @@ spec:
   source:
     repoURL: {{ required "repoUrl is required" .Values.repoUrl | quote }}
     targetRevision: {{ .Values.targetRevision | quote }}
-    path: charts/payroll
+    path: helm/app
     helm:
-      releaseName: payroll
+      releaseName: demo-java-app
       valueFiles:
         - values-dev.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: payroll-dev
+    namespace: demo-dev
   syncPolicy:
     {{- if .Values.syncPolicy.automated }}
     automated:

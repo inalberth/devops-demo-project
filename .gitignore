@@ -10,3 +10,5 @@ openbao/data/
 # Local tooling
 .DS_Store
 *.tmp
+/demo-java-app/target
+.idea

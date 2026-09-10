@@ -15,34 +15,34 @@
 ## 3. Bootstrap seguro do OpenBao
 
 - [x] 3.1 Fixar a versão da imagem OpenBao e ajustar seus endereços anunciados para o ambiente suportado, verificando versão, estado unsealed e resposta do health endpoint após reinício
-- [ ] 3.2 Adaptar o bootstrap idempotente para policy `demo-java-app-read`, caminho de segredo e role `demo-java-app-dev`, verificando duas execuções consecutivas e a configuração final pela CLI sem imprimir valores sensíveis
-- [ ] 3.3 Configurar a role para `demo-java-app-secrets` em `demo-dev`, verificando autenticação bem-sucedida dessa identidade e rejeição de um ServiceAccount não autorizado
+- [x] 3.2 Adaptar o bootstrap idempotente para policy `demo-java-app-read`, caminho de segredo e role `demo-java-app-dev`, verificando duas execuções consecutivas e a configuração final pela CLI sem imprimir valores sensíveis
+- [x] 3.3 Configurar a role para `demo-java-app-secrets` em `demo-dev`, verificando autenticação bem-sucedida dessa identidade e rejeição de um ServiceAccount não autorizado
 - [x] 3.4 Adicionar validação de conectividade pod-to-OpenBao, verificando que um pod no cluster alcança o health endpoint configurado antes da implantação da aplicação
 
 ## 4. Entrega de segredos
 
-- [ ] 4.1 Declarar namespace `demo-dev`, ServiceAccount `demo-java-app-secrets` e conectividade necessários como recursos GitOps, verificando sua aplicação no namespace alvo
-- [ ] 4.2 Criar um `SecretStore` namespaced para OpenBao usando Kubernetes Auth, verificando que sua condição `Ready` fica verdadeira em `demo-dev`
-- [ ] 4.3 Criar um `ExternalSecret` que mapeie somente os campos necessários de `secret/data/demo-java-app/dev/database`, verificando condição saudável e criação do Secret Kubernetes esperado sem exibir seu conteúdo
-- [ ] 4.4 Validar o comportamento de falha com origem ou identidade inválida e restaurar a configuração, verificando condição de erro útil e ausência de valores sensíveis em eventos e logs coletados
+- [x] 4.1 Declarar namespace `demo-dev`, ServiceAccount `demo-java-app-secrets` e conectividade necessários como recursos GitOps, verificando sua aplicação no namespace alvo
+- [x] 4.2 Criar um `SecretStore` namespaced para OpenBao usando Kubernetes Auth, verificando que sua condição `Ready` fica verdadeira em `demo-dev`
+- [x] 4.3 Criar um `ExternalSecret` que mapeie somente os campos necessários de `secret/data/demo-java-app/dev/database`, verificando condição saudável e criação do Secret Kubernetes esperado sem exibir seu conteúdo
+- [x] 4.4 Validar o comportamento de falha com origem ou identidade inválida e restaurar a configuração, verificando condição de erro útil e ausência de valores sensíveis em eventos e logs coletados
 
 ## 5. Aplicação Java e Helm
 
-- [ ] 5.1 Modernizar o build de `demo-java-app` e seu Dockerfile multi-stage com versões fixadas, verificando testes Maven, criação da imagem e importação nos nodes K3D
-- [ ] 5.2 Consolidar `helm/app` com Deployment, Service, Ingress, health checks e referências apenas às chaves necessárias do Secret, verificando `helm lint`, renderização e ausência de valores do OpenBao
-- [ ] 5.3 Implantar a imagem versionada de `demo-java-app` e validar rollout e respostas dos probes sem revelar segredos
-- [ ] 5.4 Definir o hostname `demo-java-app.localhost` e validar o roteamento Traefik através da porta publicada pelo K3D
+- [x] 5.1 Modernizar o build de `demo-java-app` e seu Dockerfile multi-stage com versões fixadas, verificando testes Maven, criação da imagem e importação nos nodes K3D
+- [x] 5.2 Consolidar `helm/app` com Deployment, Service, Ingress, health checks e referências apenas às chaves necessárias do Secret, verificando `helm lint`, renderização e ausência de valores do OpenBao
+- [x] 5.3 Implantar a imagem versionada de `demo-java-app` e validar rollout e respostas dos probes sem revelar segredos
+- [x] 5.4 Definir o hostname `demo-java-app.localhost` e validar o roteamento Traefik através da porta publicada pelo K3D
 
 ## 6. Bootstrap GitOps
 
-- [ ] 6.1 Adaptar a estrutura app-of-apps para separar plataforma e `demo-java-app`, verificando que todos os caminhos do repositório integrado existem e renderizam recursos válidos
+- [x] 6.1 Adaptar a estrutura app-of-apps para separar plataforma e `demo-java-app`, verificando que todos os caminhos do repositório integrado existem e renderizam recursos válidos
 - [ ] 6.2 Criar AppProject e Application `demo-java-app-dev` com destino e permissões restritos, verificando que o Argo CD aceita os recursos e não reporta destino ou fonte inválidos
 - [ ] 6.3 Criar a Application raiz com ordem de sincronização apropriada para stores, segredos e workload, verificando que a primeira sincronização conclui em `Synced` e `Healthy`
 - [ ] 6.4 Habilitar prune e self-heal somente para recursos gerenciados e testar um desvio não sensível, verificando que o Argo CD detecta e restaura o estado Git sem afetar os dados persistentes do OpenBao
 
 ## 7. Validação integrada
 
-- [ ] 7.1 Adaptar as verificações estáticas para Compose, K3D, código Java, manifests e charts integrados, verificando sucesso no estado válido e falha diante de um fixture inválido
+- [x] 7.1 Adaptar as verificações estáticas para Compose, K3D, código Java, manifests e charts integrados, verificando sucesso no estado válido e falha diante de um fixture inválido
 - [ ] 7.2 Criar um smoke test sem exposição de valores que valide cluster, releases, OpenBao, `SecretStore`, `ExternalSecret`, Secret, Argo CD, rollout Java e HTTP, verificando uma execução completa bem-sucedida
 - [ ] 7.3 Recriar o ambiente integrado a partir das instruções e do estado publicado, verificando idempotência do segundo bootstrap e registrando quaisquer passos manuais inevitáveis
 - [ ] 7.4 Atualizar a documentação integrada com arquitetura, fronteiras de responsabilidade e diagnóstico de falhas comuns, verificando que os fluxos de build, bootstrap, primeiro deploy, rotação e rollback correspondem aos comandos finais
