@@ -2,8 +2,8 @@
 
 - [x] 1.1 Remover do conteúdo versionável o arquivo com root token e unseal keys, adicionar regras de ignore e verificar com busca por padrões de credenciais que nenhum material administrativo permanece nos arquivos rastreáveis
 - [x] 1.2 Documentar e executar a rotação segura das credenciais OpenBao atualmente expostas, verificando que as credenciais antigas deixam de autenticar e que o servidor pode ser desbloqueado com o novo material guardado fora do repositório
-- [ ] 1.3 Inicializar o repositório Git e configurar um remoto acessível pelo Argo CD, verificando a consulta da revisão a partir do repo-server sem registrar credenciais no Git
-- [x] 1.4 Criar documentação de pré-requisitos, bootstrap, lifecycle, recuperação e teardown, verificando os comandos documentados em uma revisão passo a passo
+- [ ] 1.3 Integrar sem force-push o histórico existente de `inalberth/devops-demo-project`, configurar esse remoto e publicar o merge, verificando preservação dos arquivos remotos e consulta da revisão pelo repo-server sem registrar credenciais no Git
+- [ ] 1.4 Consolidar a documentação remota com pré-requisitos, bootstrap, lifecycle, recuperação e teardown do laboratório, verificando os comandos documentados em uma revisão passo a passo
 
 ## 2. Bootstrap da plataforma local
 
@@ -15,34 +15,34 @@
 ## 3. Bootstrap seguro do OpenBao
 
 - [x] 3.1 Fixar a versão da imagem OpenBao e ajustar seus endereços anunciados para o ambiente suportado, verificando versão, estado unsealed e resposta do health endpoint após reinício
-- [x] 3.2 Implementar bootstrap idempotente do secrets engine, policy `payroll-read`, Kubernetes Auth e role `payroll-dev`, verificando duas execuções consecutivas e a configuração final pela CLI sem imprimir valores sensíveis
-- [x] 3.3 Obter dinamicamente endpoint e CA do cluster e configurar o token reviewer do Kubernetes Auth, verificando uma autenticação bem-sucedida com `payroll-secrets` e rejeição de um ServiceAccount não autorizado
+- [ ] 3.2 Adaptar o bootstrap idempotente para policy `demo-java-app-read`, caminho de segredo e role `demo-java-app-dev`, verificando duas execuções consecutivas e a configuração final pela CLI sem imprimir valores sensíveis
+- [ ] 3.3 Configurar a role para `demo-java-app-secrets` em `demo-dev`, verificando autenticação bem-sucedida dessa identidade e rejeição de um ServiceAccount não autorizado
 - [x] 3.4 Adicionar validação de conectividade pod-to-OpenBao, verificando que um pod no cluster alcança o health endpoint configurado antes da implantação da aplicação
 
 ## 4. Entrega de segredos
 
-- [x] 4.1 Declarar namespace, ServiceAccount `payroll-secrets` e RBAC necessários como recursos GitOps, verificando sua aplicação no namespace `payroll-dev`
-- [x] 4.2 Criar um `SecretStore` namespaced para OpenBao usando Kubernetes Auth, verificando que sua condição `Ready` fica verdadeira
-- [x] 4.3 Criar um `ExternalSecret` que mapeie somente os campos necessários de `secret/data/payroll/dev/database`, verificando condição saudável e criação do Secret Kubernetes esperado sem exibir seu conteúdo
-- [x] 4.4 Validar o comportamento de falha com origem ou identidade inválida e restaurar a configuração, verificando condição de erro útil e ausência de valores sensíveis em eventos e logs coletados
+- [ ] 4.1 Declarar namespace `demo-dev`, ServiceAccount `demo-java-app-secrets` e conectividade necessários como recursos GitOps, verificando sua aplicação no namespace alvo
+- [ ] 4.2 Criar um `SecretStore` namespaced para OpenBao usando Kubernetes Auth, verificando que sua condição `Ready` fica verdadeira em `demo-dev`
+- [ ] 4.3 Criar um `ExternalSecret` que mapeie somente os campos necessários de `secret/data/demo-java-app/dev/database`, verificando condição saudável e criação do Secret Kubernetes esperado sem exibir seu conteúdo
+- [ ] 4.4 Validar o comportamento de falha com origem ou identidade inválida e restaurar a configuração, verificando condição de erro útil e ausência de valores sensíveis em eventos e logs coletados
 
-## 5. Aplicação Helm payroll
+## 5. Aplicação Java e Helm
 
-- [x] 5.1 Criar o Helm chart mínimo da aplicação com Deployment, Service, Ingress e health checks, verificando `helm lint` e renderização válida com os valores de desenvolvimento
-- [x] 5.2 Configurar o Deployment para referenciar apenas as chaves necessárias do Secret sincronizado, verificando que chart, valores e manifests renderizados não contêm os valores do OpenBao
-- [x] 5.3 Fixar uma imagem reproduzível para o workload demonstrativo e configurar um endpoint que reporte saúde sem revelar segredos, verificando o rollout e as respostas dos probes
-- [x] 5.4 Definir o hostname local da aplicação e validar o roteamento Traefik, verificando resposta HTTP bem-sucedida através da porta publicada pelo K3D
+- [ ] 5.1 Modernizar o build de `demo-java-app` e seu Dockerfile multi-stage com versões fixadas, verificando testes Maven, criação da imagem e importação nos nodes K3D
+- [ ] 5.2 Consolidar `helm/app` com Deployment, Service, Ingress, health checks e referências apenas às chaves necessárias do Secret, verificando `helm lint`, renderização e ausência de valores do OpenBao
+- [ ] 5.3 Implantar a imagem versionada de `demo-java-app` e validar rollout e respostas dos probes sem revelar segredos
+- [ ] 5.4 Definir o hostname `demo-java-app.localhost` e validar o roteamento Traefik através da porta publicada pelo K3D
 
 ## 6. Bootstrap GitOps
 
-- [x] 6.1 Criar a estrutura app-of-apps separando plataforma e aplicações, verificando que todos os caminhos de origem referenciados existem e renderizam recursos válidos
-- [ ] 6.2 Criar AppProject e Application da aplicação `payroll-dev` com destino e permissões restritos, verificando que o Argo CD aceita os recursos e não reporta destino ou fonte inválidos
+- [ ] 6.1 Adaptar a estrutura app-of-apps para separar plataforma e `demo-java-app`, verificando que todos os caminhos do repositório integrado existem e renderizam recursos válidos
+- [ ] 6.2 Criar AppProject e Application `demo-java-app-dev` com destino e permissões restritos, verificando que o Argo CD aceita os recursos e não reporta destino ou fonte inválidos
 - [ ] 6.3 Criar a Application raiz com ordem de sincronização apropriada para stores, segredos e workload, verificando que a primeira sincronização conclui em `Synced` e `Healthy`
 - [ ] 6.4 Habilitar prune e self-heal somente para recursos gerenciados e testar um desvio não sensível, verificando que o Argo CD detecta e restaura o estado Git sem afetar os dados persistentes do OpenBao
 
 ## 7. Validação integrada
 
-- [x] 7.1 Adicionar verificações estáticas para Compose, configuração K3D, manifests Kubernetes e charts Helm, verificando que o comando agregado termina com sucesso no estado válido e falha diante de um fixture inválido
-- [ ] 7.2 Criar um smoke test sem exposição de valores que valide cluster, releases, OpenBao, `SecretStore`, `ExternalSecret`, Secret, Argo CD, rollout e HTTP, verificando uma execução completa bem-sucedida
-- [x] 7.3 Recriar o ambiente a partir das instruções e do estado versionado, verificando idempotência do segundo bootstrap e registrando quaisquer passos manuais inevitáveis
-- [x] 7.4 Atualizar a documentação com arquitetura, fronteiras de responsabilidade e diagnóstico de falhas comuns, verificando que os fluxos de bootstrap, primeiro deploy, rotação e rollback correspondem aos comandos finais
+- [ ] 7.1 Adaptar as verificações estáticas para Compose, K3D, código Java, manifests e charts integrados, verificando sucesso no estado válido e falha diante de um fixture inválido
+- [ ] 7.2 Criar um smoke test sem exposição de valores que valide cluster, releases, OpenBao, `SecretStore`, `ExternalSecret`, Secret, Argo CD, rollout Java e HTTP, verificando uma execução completa bem-sucedida
+- [ ] 7.3 Recriar o ambiente integrado a partir das instruções e do estado publicado, verificando idempotência do segundo bootstrap e registrando quaisquer passos manuais inevitáveis
+- [ ] 7.4 Atualizar a documentação integrada com arquitetura, fronteiras de responsabilidade e diagnóstico de falhas comuns, verificando que os fluxos de build, bootstrap, primeiro deploy, rotação e rollback correspondem aos comandos finais

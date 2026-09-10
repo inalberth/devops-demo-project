@@ -20,22 +20,26 @@ O sistema SHALL possuir uma aplicação raiz que reconcilie separadamente os rec
 
 #### Scenario: Sincronização inicial
 - **WHEN** a aplicação raiz é instalada no Argo CD
-- **THEN** ela descobre e sincroniza os recursos declarados de plataforma e a aplicação `payroll`
+- **THEN** ela descobre e sincroniza os recursos declarados de plataforma e a aplicação `demo-java-app`
 
 #### Scenario: Reconciliação de desvio
 - **WHEN** um recurso gerenciado é alterado manualmente no cluster
 - **THEN** o Argo CD identifica o desvio e, para recursos com sincronização automática habilitada, restaura o estado versionado
 
 ### Requirement: Aplicação Helm de demonstração
-O sistema SHALL fornecer um Helm chart válido para uma aplicação `payroll` mínima contendo Deployment, Service, configuração de health checks e parametrização específica do ambiente de desenvolvimento.
+O sistema SHALL preservar a aplicação Java `demo-java-app` do repositório remoto e fornecer um Helm chart válido contendo Deployment, Service, Ingress, health checks e parametrização específica do ambiente de desenvolvimento.
 
 #### Scenario: Renderização do chart
 - **WHEN** o chart é validado e renderizado com os valores de desenvolvimento
-- **THEN** são produzidos recursos Kubernetes válidos para o namespace `payroll-dev`
+- **THEN** são produzidos recursos Kubernetes válidos para o namespace `demo-dev`
 
 #### Scenario: Implantação saudável
 - **WHEN** o Argo CD sincroniza a aplicação e o segredo requerido está disponível
 - **THEN** o workload fica disponível, passa seus health checks e responde pelo endpoint local documentado
+
+#### Scenario: Conteúdo remoto preservado
+- **WHEN** os históricos local e remoto são integrados
+- **THEN** o código Java, os materiais de CI/CD e o histórico preexistente permanecem disponíveis sem force-push
 
 ### Requirement: Consumo seguro do segredo
 A aplicação SHALL consumir o Secret Kubernetes sincronizado pelo External Secrets Operator sem incluir o valor secreto no chart, nos valores Helm ou nos manifests renderizados.

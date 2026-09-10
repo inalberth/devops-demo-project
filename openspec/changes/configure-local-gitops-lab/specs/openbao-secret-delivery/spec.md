@@ -20,7 +20,7 @@ O sistema SHALL configurar, de forma repetível, o secrets engine necessário, p
 
 #### Scenario: Primeiro bootstrap
 - **WHEN** um OpenBao inicializado e desbloqueado ainda não possui a integração
-- **THEN** o bootstrap cria a configuração necessária para a aplicação `payroll`
+- **THEN** o bootstrap cria a configuração necessária para a aplicação `demo-java-app`
 
 #### Scenario: Bootstrap repetido
 - **WHEN** o bootstrap é executado sobre uma configuração já existente
@@ -30,7 +30,7 @@ O sistema SHALL configurar, de forma repetível, o secrets engine necessário, p
 O External Secrets Operator SHALL autenticar no OpenBao usando Kubernetes Auth e um ServiceAccount dedicado no namespace da aplicação, sem utilizar root token ou token estático de longa duração.
 
 #### Scenario: Identidade autorizada
-- **WHEN** o `SecretStore` autentica usando o ServiceAccount `payroll-secrets` em `payroll-dev`
+- **WHEN** o `SecretStore` autentica usando o ServiceAccount `demo-java-app-secrets` em `demo-dev`
 - **THEN** o OpenBao emite um token temporário limitado à política de leitura da aplicação
 
 #### Scenario: Identidade não autorizada
@@ -42,7 +42,7 @@ O sistema SHALL declarar um store e um recurso de segredo externo que sincronize
 
 #### Scenario: Segredo disponível
 - **WHEN** o segredo de origem existe e a autenticação é válida
-- **THEN** o External Secrets Operator cria ou atualiza o Secret Kubernetes esperado em `payroll-dev`
+- **THEN** o External Secrets Operator cria ou atualiza o Secret Kubernetes esperado em `demo-dev`
 
 #### Scenario: Segredo indisponível
 - **WHEN** o caminho, a política ou a conectividade com OpenBao é inválida
