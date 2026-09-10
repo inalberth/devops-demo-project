@@ -7,7 +7,7 @@
 
 ## 2. Bootstrap da plataforma local
 
-- [ ] 2.1 Criar uma configuração K3D versionada com versão K3s, topologia e portas fixadas, verificando que sua validação passa e que um cluster limpo pode ser criado com três nodes `Ready`
+- [x] 2.1 Criar uma configuração K3D versionada com versão K3s, topologia e portas fixadas, verificando que sua validação passa e que um cluster limpo pode ser criado com três nodes `Ready`
 - [x] 2.2 Consolidar os valores e versões do Argo CD em arquivos declarativos e atualizar os comandos de instalação para consumi-los, verificando a release `deployed`, rollout saudável e resposta em `argocd.localhost`
 - [x] 2.3 Adicionar valores, versão fixada e operações de instalação/status do External Secrets Operator, verificando a release, seus três controllers e os CRDs de `SecretStore` e `ExternalSecret`
 - [x] 2.4 Reorganizar os targets de install/start/stop/status/delete para serem idempotentes e reportarem falhas relevantes, verificando reexecução sem duplicar cluster ou releases e remoção sem apagar dados Raft do OpenBao
@@ -44,5 +44,5 @@
 
 - [x] 7.1 Adicionar verificações estáticas para Compose, configuração K3D, manifests Kubernetes e charts Helm, verificando que o comando agregado termina com sucesso no estado válido e falha diante de um fixture inválido
 - [ ] 7.2 Criar um smoke test sem exposição de valores que valide cluster, releases, OpenBao, `SecretStore`, `ExternalSecret`, Secret, Argo CD, rollout e HTTP, verificando uma execução completa bem-sucedida
-- [ ] 7.3 Recriar o ambiente a partir das instruções e do estado versionado, verificando idempotência do segundo bootstrap e registrando quaisquer passos manuais inevitáveis
+- [x] 7.3 Recriar o ambiente a partir das instruções e do estado versionado, verificando idempotência do segundo bootstrap e registrando quaisquer passos manuais inevitáveis
 - [x] 7.4 Atualizar a documentação com arquitetura, fronteiras de responsabilidade e diagnóstico de falhas comuns, verificando que os fluxos de bootstrap, primeiro deploy, rotação e rollback correspondem aos comandos finais
