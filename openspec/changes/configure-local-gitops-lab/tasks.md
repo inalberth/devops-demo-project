@@ -2,7 +2,7 @@
 
 - [x] 1.1 Remover do conteúdo versionável o arquivo com root token e unseal keys, adicionar regras de ignore e verificar com busca por padrões de credenciais que nenhum material administrativo permanece nos arquivos rastreáveis
 - [x] 1.2 Documentar e executar a rotação segura das credenciais OpenBao atualmente expostas, verificando que as credenciais antigas deixam de autenticar e que o servidor pode ser desbloqueado com o novo material guardado fora do repositório
-- [ ] 1.3 Integrar sem force-push o histórico existente de `inalberth/devops-demo-project`, configurar esse remoto e publicar o merge, verificando preservação dos arquivos remotos e consulta da revisão pelo repo-server sem registrar credenciais no Git
+- [x] 1.3 Integrar sem force-push o histórico existente de `inalberth/devops-demo-project`, configurar esse remoto e publicar o merge, verificando preservação dos arquivos remotos e consulta da revisão pelo repo-server sem registrar credenciais no Git
 - [ ] 1.4 Consolidar a documentação remota com pré-requisitos, bootstrap, lifecycle, recuperação e teardown do laboratório, verificando os comandos documentados em uma revisão passo a passo
 
 ## 2. Bootstrap da plataforma local
