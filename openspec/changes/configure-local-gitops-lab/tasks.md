@@ -3,7 +3,7 @@
 - [x] 1.1 Remover do conteúdo versionável o arquivo com root token e unseal keys, adicionar regras de ignore e verificar com busca por padrões de credenciais que nenhum material administrativo permanece nos arquivos rastreáveis
 - [x] 1.2 Documentar e executar a rotação segura das credenciais OpenBao atualmente expostas, verificando que as credenciais antigas deixam de autenticar e que o servidor pode ser desbloqueado com o novo material guardado fora do repositório
 - [x] 1.3 Integrar sem force-push o histórico existente de `inalberth/devops-demo-project`, configurar esse remoto e publicar o merge, verificando preservação dos arquivos remotos e consulta da revisão pelo repo-server sem registrar credenciais no Git
-- [ ] 1.4 Consolidar a documentação remota com pré-requisitos, bootstrap, lifecycle, recuperação e teardown do laboratório, verificando os comandos documentados em uma revisão passo a passo
+- [x] 1.4 Consolidar a documentação remota com pré-requisitos, bootstrap, lifecycle, recuperação e teardown do laboratório, verificando os comandos documentados em uma revisão passo a passo
 
 ## 2. Bootstrap da plataforma local
 
@@ -44,5 +44,5 @@
 
 - [x] 7.1 Adaptar as verificações estáticas para Compose, K3D, código Java, manifests e charts integrados, verificando sucesso no estado válido e falha diante de um fixture inválido
 - [x] 7.2 Criar um smoke test sem exposição de valores que valide cluster, releases, OpenBao, `SecretStore`, `ExternalSecret`, Secret, Argo CD, rollout Java e HTTP, verificando uma execução completa bem-sucedida
-- [ ] 7.3 Recriar o ambiente integrado a partir das instruções e do estado publicado, verificando idempotência do segundo bootstrap e registrando quaisquer passos manuais inevitáveis
-- [ ] 7.4 Atualizar a documentação integrada com arquitetura, fronteiras de responsabilidade e diagnóstico de falhas comuns, verificando que os fluxos de build, bootstrap, primeiro deploy, rotação e rollback correspondem aos comandos finais
+- [x] 7.3 Recriar o ambiente integrado a partir das instruções e do estado publicado, verificando idempotência do segundo bootstrap e registrando quaisquer passos manuais inevitáveis
+- [x] 7.4 Atualizar a documentação integrada com arquitetura, fronteiras de responsabilidade e diagnóstico de falhas comuns, verificando que os fluxos de build, bootstrap, primeiro deploy, rotação e rollback correspondem aos comandos finais
