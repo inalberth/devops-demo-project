@@ -36,13 +36,13 @@
 ## 6. Bootstrap GitOps
 
 - [x] 6.1 Adaptar a estrutura app-of-apps para separar plataforma e `demo-java-app`, verificando que todos os caminhos do repositório integrado existem e renderizam recursos válidos
-- [ ] 6.2 Criar AppProject e Application `demo-java-app-dev` com destino e permissões restritos, verificando que o Argo CD aceita os recursos e não reporta destino ou fonte inválidos
-- [ ] 6.3 Criar a Application raiz com ordem de sincronização apropriada para stores, segredos e workload, verificando que a primeira sincronização conclui em `Synced` e `Healthy`
-- [ ] 6.4 Habilitar prune e self-heal somente para recursos gerenciados e testar um desvio não sensível, verificando que o Argo CD detecta e restaura o estado Git sem afetar os dados persistentes do OpenBao
+- [x] 6.2 Criar AppProject e Application `demo-java-app-dev` com destino e permissões restritos, verificando que o Argo CD aceita os recursos e não reporta destino ou fonte inválidos
+- [x] 6.3 Criar a Application raiz com ordem de sincronização apropriada para stores, segredos e workload, verificando que a primeira sincronização conclui em `Synced` e `Healthy`
+- [x] 6.4 Habilitar prune e self-heal somente para recursos gerenciados e testar um desvio não sensível, verificando que o Argo CD detecta e restaura o estado Git sem afetar os dados persistentes do OpenBao
 
 ## 7. Validação integrada
 
 - [x] 7.1 Adaptar as verificações estáticas para Compose, K3D, código Java, manifests e charts integrados, verificando sucesso no estado válido e falha diante de um fixture inválido
-- [ ] 7.2 Criar um smoke test sem exposição de valores que valide cluster, releases, OpenBao, `SecretStore`, `ExternalSecret`, Secret, Argo CD, rollout Java e HTTP, verificando uma execução completa bem-sucedida
+- [x] 7.2 Criar um smoke test sem exposição de valores que valide cluster, releases, OpenBao, `SecretStore`, `ExternalSecret`, Secret, Argo CD, rollout Java e HTTP, verificando uma execução completa bem-sucedida
 - [ ] 7.3 Recriar o ambiente integrado a partir das instruções e do estado publicado, verificando idempotência do segundo bootstrap e registrando quaisquer passos manuais inevitáveis
 - [ ] 7.4 Atualizar a documentação integrada com arquitetura, fronteiras de responsabilidade e diagnóstico de falhas comuns, verificando que os fluxos de build, bootstrap, primeiro deploy, rotação e rollback correspondem aos comandos finais
